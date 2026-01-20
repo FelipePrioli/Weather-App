@@ -6,7 +6,7 @@ namespace WeatherApi.Models
 
         public string Nome { get; set; } = null!;
 
-        // 🔑 usado apenas para validação
+       
         public string NomeNormalizado { get; set; } = null!;
 
         public int UsuarioId { get; set; }

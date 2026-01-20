@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WeatherApi.Services;
 using WeatherApi.Data;
-using WeatherApi.Repositories;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -78,9 +78,7 @@ builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<IUserService, UserService>();
-//Repositories
-builder.Services.AddScoped<UserRepository>();
-builder.Services.AddScoped<IFavoriteRepository, FavoriteRepository>();
+
 
 
 var app = builder.Build();
