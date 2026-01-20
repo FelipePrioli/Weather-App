@@ -30,7 +30,7 @@ Weather-App/
 │  ├─ public/            # Arquivos públicos (index.html, icons etc.)
 │  ├─ src/               # Código fonte React
 │  │  ├─ components/     # Componentes reutilizáveis
-│  │  ├─ pages/          # Páginas da aplicação
+│  │  ├─ features/          # Páginas da aplicação
 │  │  └─ services/       # Comunicação com a API
 │  ├─ package.json       # Dependências e scripts do frontend
 │  └─ tsconfig.json      # Configurações TypeScript
