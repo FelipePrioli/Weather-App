@@ -1,41 +1,87 @@
-# 🌦️ Previsão do Tempo – Weather API
+# 🌤 Weather App
 
-API desenvolvida em **.NET** para consulta de dados meteorológicos em tempo real, consumindo uma **API externa de clima** e expondo os dados de forma padronizada para uso em aplicações frontend.
+![Build](https://img.shields.io/badge/build-passing-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Version](https://img.shields.io/badge/version-1.0.0-blueviolet)
 
-> 🚀 Projeto estruturado com boas práticas, DTOs, Services, Controllers e testes de integração.
-
----
-
-## 📌 Visão Geral
-
-Este projeto faz parte da aplicação **Previsão do Tempo**, que será composta por:
-
-- 🔹 **Backend**: API REST em .NET
-- 🔹 **Frontend**: (em desenvolvimento)
-- 🔹 **Testes de Integração** para validação da API
+Aplicativo full-stack que fornece informações climáticas em tempo real, com **FrontEnd em Angular** e **BackEnd em ASP.NET Core**.
 
 ---
 
-## 🧱 Estrutura do Projeto
+## 🧠 Visão Geral
+
+Este projeto é dividido em duas partes principais:
+
+1. **Backend**: API REST em .NET, responsável por fornecer os dados de clima.
+2. **Frontend**: Aplicação Angular que consome a API e exibe informações ao usuário.
+
+---
+
+## 🏗 Estrutura do Projeto
 
 ```text
-PrevisaoTempo
+Weather-App/
+├─ BackEnd/
+│  ├─ Controllers/       # Endpoints da API
+│  ├─ Models/            # Modelos de dados
+│  ├─ Services/          # Lógica de negócio
+│  ├─ WeatherApi.csproj  # Projeto .NET
+│  ├─ Program.cs         # Configuração e inicialização
+│  └─ appsettings.json   # Configurações da API
 │
-├── backend
-│   └── WeatherApi
-│       ├── Controllers
-│       ├── DTOs
-│       ├── Services
-│       ├── Properties
-│       ├── appsettings.json
-│       ├── Program.cs
-│       └── WeatherApi.csproj
-│
-├── WeatherApi.Tests
-│   ├── Controllers
-│   ├── Integration
-│   └── WeatherApi.Tests.csproj
-│
-├── .gitignore
-├── PrevisaoTempo.sln
-└── README.md
+├─ FrontEnd/weather-app/
+│  ├─ public/            # Arquivos públicos (index.html, icons etc.)
+│  ├─ src/               # Código fonte React
+│  │  ├─ components/     # Componentes reutilizáveis
+│  │  ├─ pages/          # Páginas da aplicação
+│  │  └─ services/       # Comunicação com a API
+│  ├─ package.json       # Dependências e scripts do frontend
+│  └─ tsconfig.json      # Configurações TypeScript
+└─ README.md             # Este arquivo
+
+------------------------------------------------------------
+⚡ Funcionalidades
+Buscar clima atual por cidade
+
+Exibir temperatura, umidade e condições meteorológicas
+
+Interface moderna e responsiva
+
+Backend modularizado com controllers, services e models
+
+Exemplo de endpoint: /api/weather?city=São Paulo
+------------------------------------------------------------
+
+🔧 Como Rodar o Projeto
+Backend (.NET)
+bash
+Copiar código
+cd BackEnd
+dotnet restore
+dotnet run
+
+------------------------------------------------------------
+
+⚠️ Certifique-se de configurar o appsettings.Development.json com sua chave de API de clima, se necessário.
+
+------------------------------------------------------------
+
+Exemplo de chamada à API com cURL:
+
+Copiar código
+curl http://localhost:<PORT>/api/weather?city=São%20Paulo
+Exemplo de resposta:
+
+json
+Copiar código
+{
+  "city": "São Paulo",
+  "temperature": 25,
+  "humidity": 80,
+  "condition": "Ensolarado"
+}
+Frontend (React)
+Copiar código
+cd FrontEnd/weather-app
+ng serve
+O app abrirá em http://localhost:4200 e se conectará à API.
