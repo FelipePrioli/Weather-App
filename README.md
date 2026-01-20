@@ -59,7 +59,7 @@ dotnet run
 
 ------------------------------------------------------------
 
-⚠️ Certifique-se de configurar o appsettings.Development.json com sua chave de API de clima, se necessário.
+⚠️ Certifique-se de configurar o appsettings.json com sua chave de API de clima, se necessário.
 
 ------------------------------------------------------------
 
