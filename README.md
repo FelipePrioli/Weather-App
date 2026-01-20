@@ -82,3 +82,15 @@ Copiar código
 cd FrontEnd/weather-app
 ng serve
 O app abrirá em http://localhost:4200 e se conectará à API.
+------------------------------------------------------------
+C#
+47.8%
+ 
+TypeScript
+28.4%
+ 
+SCSS
+13.9%
+ 
+HTML
+9.9%
