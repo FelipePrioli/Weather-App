@@ -1,0 +1,197 @@
+<div class="page">
+  <!-- ================= HEADER ================= -->
+  <header class="page-header">
+    <div class="left-actions">
+      <!-- Estado padrão -->
+      <ng-container *ngIf="!showFavorites; else favoritesHeader">
+        <h1>🌦️ Previsão do Tempo</h1>
+        <button class="btn-icon" *ngIf="user$ | async" (click)="goToFavorites()">Favoritos</button>
+      </ng-container>
+
+      <!-- Estado favoritos -->
+      <ng-template #favoritesHeader>
+        <button class="btn-icon" (click)="backToSearch()">← Voltar</button>
+        <h1>✨ Favoritos</h1>
+      </ng-template>
+    </div>
+
+    <div class="auth-actions">
+      <ng-container *ngIf="user$ | async as user; else guest">
+        <span class="welcome">
+          Olá, <strong>{{ user.nome }}</strong>
+        </span>
+        <button class="btn-outline" (click)="logout()">Sair</button>
+      </ng-container>
+
+      <ng-template #guest>
+        <button class="btn-outline" (click)="showLogin = true">Login</button>
+        <button class="btn-primary" (click)="showRegister = true">Registrar</button>
+      </ng-template>
+    </div>
+  </header>
+
+  <!-- ================= MENSAGENS ================= -->
+  <div *ngIf="authSuccess" class="success-message">
+    {{ authSuccess }}
+  </div>
+
+  <div *ngIf="authError" class="error-message">
+    {{ authError }}
+  </div>
+
+  <!-- ================================================= -->
+  <!-- ================= FAVORITES ===================== -->
+  <!-- ================================================= -->
+  <main class="app-container" *ngIf="showFavorites && (user$ | async)">
+    <app-favorites (favoriteClicked)="onFavoriteSelected($event)"> </app-favorites>
+  </main>
+
+  <!-- ================================================= -->
+  <!-- ================= BUSCA / CLIMA ================= -->
+  <!-- ================================================= -->
+  <ng-container *ngIf="!showFavorites">
+    <main class="app-container">
+      <p class="intro-text">Escreva o nome da cidade para ter acesso à previsão do tempo</p>
+
+      <!-- SEARCH -->
+      <div class="search-container">
+        <input type="text" placeholder="Digite a cidade" [(ngModel)]="city" />
+        <button (click)="search()">Buscar</button>
+      </div>
+
+      <!-- LOADING -->
+      <div class="loading" *ngIf="loading">
+        <span class="spinner"></span>
+        Carregando...
+      </div>
+
+      <!-- ================= WEATHER CARD ================= -->
+      <section class="weather-card" *ngIf="weather && !loading">
+        <!-- CIDADE + FAVORITO -->
+        <div class="weather-location">
+          <h2>{{ weather.city }}</h2>
+
+          <button class="favorite-btn" (click)="addToFavorites()" title="Adicionar aos favoritos">
+            ❤️
+          </button>
+        </div>
+
+        <!-- AGORA -->
+        <div class="weather-now">
+          <img
+            [src]="'https://openweathermap.org/img/wn/' + weather.icon + '@2x.png'"
+            alt="Ícone do clima"
+          />
+
+          <div class="weather-main">
+            <span class="temp" [ngClass]="getTempClass(weather.temperature)">
+              {{ weather.temperature | number: '1.0-0' }}°C
+            </span>
+
+            <span class="description">
+              {{ weather.description }}
+            </span>
+          </div>
+        </div>
+
+        <!-- DETALHES -->
+        <div class="weather-details">
+          <div class="detail-card">
+            <span class="label">Min ↓</span>
+            <strong>{{ weather.tempMin | number: '1.0-0' }}°C</strong>
+          </div>
+
+          <div class="detail-card">
+            <span class="label">Max ↑</span>
+            <strong>{{ weather.tempMax | number: '1.0-0' }}°C</strong>
+          </div>
+
+          <div class="detail-card">
+            <span class="label">Umidade 💧</span>
+            <strong>{{ weather.humidity }}%</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- BOTÃO FORECAST -->
+      <button
+        class="btn-icon"
+        style="margin-top: 16px; width: 100%; justify-content: center; border: 1px solid #00000048"
+        *ngIf="weather && !loading"
+        (click)="toggleForecast()"
+      >
+        🌤️ {{ showForecast ? 'Ocultar previsão' : 'Ver previsão dos próximos 5 dias' }}
+      </button>
+    </main>
+
+    <section class="empty-state" *ngIf="!weather && !loading">
+      <h2>Descubra o clima da sua cidade</h2>
+
+      <p>Digite o nome de uma cidade acima para ver a previsão atual e os próximos 5 dias.</p>
+
+      <div class="suggestions">
+        <span (click)="city = 'São Paulo'">São Paulo</span>
+        <span (click)="city = 'Rio de Janeiro'">Rio de Janeiro</span>
+        <span (click)="city = 'Brasília'">Brasília</span>
+      </div>
+    </section>
+
+    <!-- ================= FORECAST ================= -->
+    <section *ngIf="showForecast && forecast.length && weather" style="margin-top: 32px">
+      <h3 style="margin-bottom: 16px">Previsão de 5 dias — {{ weather.city }}</h3>
+
+      <div class="forecast-grid">
+        <div class="forecast-card" *ngFor="let day of forecast">
+          <div class="top-info">
+            {{ day.description | titlecase }} - {{ day.date | date: 'dd/MM' }}
+          </div>
+
+          <img
+            class="icon"
+            [src]="'https://openweathermap.org/img/wn/' + day.icon + '@2x.png'"
+            alt="Ícone do clima"
+          />
+
+          <span class="temp">
+            ↓ {{ day.tempMin | number: '1.0-0' }}°C — {{ day.tempMax | number: '1.0-0' }}°C ↑
+          </span>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+
+  <!-- ================= MODAL LOGIN ================= -->
+  <div class="modal" *ngIf="showLogin">
+    <div class="modal-card">
+      <h2>Login</h2>
+
+      <input type="email" placeholder="E-mail" [(ngModel)]="email" />
+      <input type="password" placeholder="Senha" [(ngModel)]="senha" />
+
+      <small *ngIf="authError" class="error">
+        {{ authError }}
+      </small>
+
+      <button class="btn-primary" (click)="login()">Entrar</button>
+      <button class="btn-outline" (click)="showLogin = false">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- ================= MODAL REGISTRO ================= -->
+  <div class="modal" *ngIf="showRegister">
+    <div class="modal-card">
+      <h2>Registrar</h2>
+
+      <input type="text" placeholder="Nome" [(ngModel)]="nome" />
+      <input type="email" placeholder="E-mail" [(ngModel)]="email" />
+      <input type="password" placeholder="Senha" [(ngModel)]="senha" />
+
+      <small *ngIf="authError" class="error">
+        {{ authError }}
+      </small>
+
+      <button class="btn-primary" (click)="register()">Criar conta</button>
+      <button class="btn-outline" (click)="showRegister = false">Cancelar</button>
+    </div>
+  </div>
+</div>

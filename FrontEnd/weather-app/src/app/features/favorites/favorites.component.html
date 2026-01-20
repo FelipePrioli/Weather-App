@@ -1,0 +1,29 @@
+<main class="app-container">
+  <h2 style="margin-bottom: 16px">🌟 Cidades Favoritas</h2>
+
+  <!-- ADD FAVORITE -->
+
+  <!-- LOADING -->
+  <div class="loading" *ngIf="loading">
+    <span class="spinner"></span>
+    Carregando...
+  </div>
+
+  <!-- EMPTY -->
+  <div *ngIf="!loading && favorites.length === 0">
+    Nenhuma cidade favorita ainda, pesquise uma e clique no coração para adiciona-la
+  </div>
+
+  <!-- LIST -->
+  <ul>
+    <li
+      *ngFor="let fav of favorites; trackBy: trackById"
+      (click)="selectFavorite(fav)"
+      [class.highlight]="fav.id === highlightedId"
+      class="favorite-item"
+    >
+      <span>{{ fav.nome }}</span>
+      <button type="button" (click)="removeFavorite(fav, $event)" class="remove-btn">❌</button>
+    </li>
+  </ul>
+</main>

@@ -1,0 +1,67 @@
+# ===================================
+# GLOBAL
+# ===================================
+# Variáveis de ambiente
+.env
+.env.*
+*.local
+*.log
+logs/
+
+# ===================================
+# .NET / ASP.NET Core
+# ===================================
+# Build
+**/bin/
+**/obj/
+
+# Usuário e IDE
+**/*.user
+**/*.suo
+**/*.cache
+**/*.pdb
+**/*.dll
+**/*.exe
+*.dbmdl
+
+# Configurações sensíveis
+**/appsettings.Development.json
+**/appsettings.Local.json
+
+# Testes
+**/TestResults/
+*.trx
+
+# Pacotes
+**/packages/
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+
+# ===================================
+# Visual Studio / VS Code / JetBrains
+# ===================================
+.vs/
+.vscode/
+.idea/
+*.sln.iml
+*.dotCover
+*.resharper
+*.DotSettings.user
+
+# ===================================
+# Node / Frontend 
+# ===================================
+# Node
+**/node_modules/
+**/npm-debug.log*
+**/yarn-error.log*
+**/pnpm-debug.log*
+
+# Angular
+**/dist/
+.angular/
+*.tgz
+
+# Editor temp
+*.tsbuildinfo
