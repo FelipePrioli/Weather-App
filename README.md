@@ -1,4 +1,4 @@
-# 🌤 Weather App
+# 🌦️ Weather App
 ![Version](https://img.shields.io/badge/version-1.0.0-blueviolet)
 
 Aplicativo full-stack que fornece informações climáticas em tempo real, com **FrontEnd em Angular** e **BackEnd em ASP.NET Core**.
